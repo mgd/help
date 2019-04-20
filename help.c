@@ -24,19 +24,11 @@ struct INDEX{
 
 #define MWL 30             // MAX WORD LENGTH, CHANGED ONCE TRUE LENGHT IS FOUND
 PRIMARY PMS[MWL];
-INDEX TEMP;
 FILE * MASTER_FILE;
-int *IX_A;
 int LETTER_ARR[26];
-int IX_FLAG=0;          // INSERTS VALUE OF IX TABLE
-int GTL = 0;            // GLOBAL TRUE LENGTH OF CURRENT WORD, USED TO INCREMENT IN ARRAY
-char IBG[MWL];          // INITIAL BEST GUESS
-char LG = ' ';          // LAST GUESS MADE
-
 
 void init_hangman_player(char*);
 void fill_arrays();
-//rewrite_letter_freq(char *);
 
 int
 main(int argc, char *argv[1]){
@@ -48,21 +40,17 @@ main(int argc, char *argv[1]){
 void 
 init_hangman_player(char* word_file){
 int i, j;
-
   MASTER_FILE = fopen(word_file, "r");
-
   //INITIALIZE 
   for(i=0;i<MWL;i++){
     PMS[i].word_count = 0;
     PMS[i].string_array = NULL;
-    TEMP.letter_freq[i]=0; // can do later
     //INITIALIZE LETTER FREQUENCY
     for(j=0;j<26;j++){
       PMS[i].letter_freq[j]=0;
     }
   }
 
-  TEMP.word_count = 0; // can do later
 
   fill_arrays();
   return ;
@@ -88,15 +76,12 @@ fill_arrays(){
     PMS[cur_len].word_count++;
     printf("word count%d\n",PMS[cur_len].word_count);
   }
-
     printf("char size %d true len %d\n", sizeof(char), true_max_len);
 
     true_max_len++;
 
   /////////////////////////////// MALLOC STRING ARRAY SIZES ///////////////////////////////
   for (i = 0; i < true_max_len; i++) {
-
-
 
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! why doesnt this work ??!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
     PMS[i].string_array = (char *) malloc((PMS[i].word_count * (i+2)) * sizeof(char));
